@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <div class="jumbotron text-center">
+    <h1>
+      <img class="logo" src="assets/ngx-rocket-logo.png" alt="angular logo"/>
+      <span translate>APP_NAME_HOME</span>
+    </h1>
+  </div>
+
+  <div clas="cotainer">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" translate>ID<a href="#" (click)="sort($event, 'id', 'asc')">&uarr;</a><a href="#" (click)="sort($event, 'id', 'desc')">&darr;</a></th>
+          <th scope="col" translate>User Name<a href="#" (click)="sort($event, 'username', 'asc')">&uarr;</a><a href="#" (click)="sort($event, 'username', 'desc')">&darr;</a></th>
+          <th scope="col" translate>Email<a href="#" (click)="sort($event, 'email', 'asc')">&uarr;</a><a href="#" (click)="sort($event, 'email', 'desc')">&darr;</a></th>
+          <th scope="col" translate>Text</th>
+          <th scope="col" translate>Status<a href="#" (click)="sort($event, 'status', 'asc')">&uarr;</a><a href="#" (click)="sort($event, 'status', 'desc')">&darr;</a></th>
+          <th scope="col" translate>Image</th>
+          <th scope="col" translate *ngIf = "isAdmin">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+           <tr *ngFor="let task of tasks">
+             <td>{{task.id}}</td>
+             <td>{{task.username}}</td>
+             <td>{{task.email}}</td>
+             <td>{{task.text}}</td>
+             <td>
+               <div *ngIf="task.status == '0'; else elseStatusBlock" translate>New</div>
+               <ng-template #elseStatusBlock translate>Done</ng-template>
+             </td>
+             <td><img width="80" src="{{task.image_path}}"></td>
+             <td *ngIf = "isAdmin"><button type="button" (click)="onView(task)" class="btn btn-primary" style="margin-right:10px;" translate>View</button></td>
+          </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td><a [class.disabled]="pageNum <= 1" href="#" (click)="previous($event)" translate>Previous</a></td>
+          <td><a [class.disabled]="!hasNextPage()" href="#" (click)="next($event)" translate>Next</a></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="jumbotron text-center">
+      <td><button type="button" (click)="onNewTask()" class="btn btn-primary" style="margin-right:10px;" translate>New Task</button></td>
+    </div>
+</div>
+</div>

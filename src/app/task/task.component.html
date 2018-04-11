@@ -1,0 +1,109 @@
+<div class="container-fluid">
+  <div class="jumbotron text-center">
+    <h2 style="text-align:left" translate>New Task</h2>
+    <form style="width:40%" #taskForm="ngForm" (ngSubmit)="taskForm.form.valid && isView ? onUpdate() : onSave()" novalidate>
+        <div class="form-group">
+          <label for="taskHelp" style="float:left" translate>UserName</label>
+          <input type="text" [(ngModel)]="task.username" name="username" class="form-control" [disabled]="isView" required minlength="4" id="taskHelp" aria-describedby="taskHelp" placeholder="Username">
+        </div>
+
+        <div class="form-group">
+          <label for="taskHelp" style="float:left" translate>Email</label>
+          <input type="email" [(ngModel)]="task.email" name="email" class="form-control" [disabled]="isView" required minlength="4" id="taskHelp" aria-describedby="taskHelp" placeholder="Email">
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputDetails1" style="float:left" translate>Text</label>
+          <textarea class="form-control" [(ngModel)]="task.text" name="text" id="exampleInputDetails1" required minlength="1" placeholder="Text" rows="3"></textarea>
+        </div>
+
+        <div class="form-group" *ngIf="isView;else new_status_content">
+          <label for="exampleInputDetails1" style="float:left" translate>Status</label>
+          <select [(ngModel)]="task.status" name="status" (input)="onOptionInput($event)" class="form-control" required>
+            <option *ngFor="let option of options" [selected]="option.id == task.status" value= {{option.id}}>{{option.name}}</option>
+          </select>
+        </div>
+
+        <ng-template #new_status_content>
+          <div class="form-group">
+            <label for="exampleInputDetails1" style="float:left" translate>Status:</label>
+            <input type="text" class="form-control" disabled value="New">
+            <input type="hidden" [(ngModel)]="task.status" name="status" disabled value="0">
+          </div>
+        </ng-template>
+
+        <div class="form-group" *ngIf="!isView;else view_image_content">
+          <label for="exampleInputDetails1" style="float:left" translate>Picture</label>
+          <input type="file" class="form-control" (change)="onSelectFile($event)" name="image" [disabled]="isView" id="exampleInputDetails1" placeholder="Image">
+          <img width="80" src="{{filePreview}}" style="margin:15px;">
+        </div>
+
+        <ng-template #view_image_content>
+          <div class="form-group">
+            <label for="exampleInputDetails1" style="float:left" translate>Picture</label>
+            <img width="80" src="{{task.image_path}}" style="margin:15px;">
+          </div>
+        </ng-template>
+
+        <div class="form-group">
+          <div style="color:#ff4d4d; text-align:left">{{errors}}</div>
+          <div style="text-align:left; color:#ff4d4d;" translate *ngIf="isLoading">Saving</div>
+        </div>
+
+        <!-- Modal Preview Window Start -->
+        <ng-template #content let-c="close" let-d="dismiss">
+          <div class="modal-header">
+          <h4 class="modal-title" translate>Task Preview</h4>
+
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="taskHelp" style="float:left">UserName</label>
+                <input type="text" [(ngModel)]="task.username" name="username" class="form-control" disabled aria-describedby="taskHelp">
+              </div>
+
+              <div class="form-group">
+                <label for="taskHelp" style="float:left">Email</label>
+                <input type="email" [(ngModel)]="task.email" name="email" class="form-control" disabled id="taskHelp" aria-describedby="taskHelp" placeholder="Email">
+              </div>
+
+              <div class="form-group">
+                <label for="exampleInputDetails1" style="float:left">Text</label>
+                <textarea class="form-control" [(ngModel)]="task.text" name="text" id="exampleInputDetails1" disabled rows="3"></textarea>
+              </div>
+
+              <div class="form-group" *ngIf="isView;else new_status_content">
+                <label for="exampleInputDetails1" style="float:left">Status</label>
+                <div *ngIf="task.status == '0'; else elseStatusBlock" translate>
+                  <input type="text" value="New" class="form-control" disabled id="exampleInputDetails1" aria-describedby="taskHelp" >
+                </div>
+                <ng-template #elseStatusBlock translate>
+                  <input type="text" value="Done" class="form-control" disabled id="exampleInputDetails1" aria-describedby="taskHelp" >
+                </ng-template>
+              </div>
+
+              <div class="form-group" *ngIf="!isView">
+                <label for="exampleInputDetails1" style="float:left">Picture:</label>
+                <img width="80" src="{{filePreview}}" style="margin:15px;">
+              </div>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="c('Close')" translate>Close</button>
+          </div>
+        </ng-template>
+        <!-- Modal Preview Window End -->
+
+        <div class="form-group" style="float:left;">
+          <button type="button" (click)="onCancel()" class="btn btn-primary" translate>Cancel</button>
+          <button type="button" (click)="onPreview(content)" class="btn btn-primary" [disabled]="!taskForm.form.valid || !filePreview" translate>Preview</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!taskForm.form.valid || !filePreview || !hasPreviewDone" translate>Save</button>
+        </div>
+     </form>
+  </div>
+</div>
