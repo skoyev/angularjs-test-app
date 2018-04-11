@@ -48,9 +48,9 @@ export class TaskService {
 
     if(task.id > 0){
       let queryParams   = 'status=' + task.status + '&text=' + task.text + '&token=beejee';
-      //let queryParams   = 'status=' + task.status + '&token=beejee';
       //let encodedParams = encodeURIComponent(queryParams);
-      let hash = new Md5().appendStr(queryParams).end().toString();
+      let encodedParams = encodeURI(queryParams);
+      let hash = new Md5().appendStr(encodedParams).end().toString();
       console.log(hash);
       taskFormData.append('token', 'beejee');
       taskFormData.append('signature', hash);
