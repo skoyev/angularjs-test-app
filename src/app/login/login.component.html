@@ -1,7 +1,7 @@
 <div class="login-container bg-light">
   <div class="login-box">
     <h1 translate>APP_NAME</h1>
-    <div>      
+    <div>
       <div class="d-inline-block ml-3" ngbDropdown>
         <button id="language-dropdown" class="btn btn-sm btn-secondary" ngbDropdownToggle>
           {{currentLanguage}}
@@ -35,7 +35,7 @@
               </label>
               <label class="d-block">
                 <input type="password" class="form-control" formControlName="password" autocomplete="current-password"
-                       [placeholder]="'Password' | translate" required/>
+                       [placeholder]="'Password' | translate"/>
                 <span hidden translate>Password</span>
                 <small [hidden]="loginForm.controls.password.valid || loginForm.controls.password.untouched"
                        class="text-danger" translate>
@@ -52,6 +52,10 @@
             <button class="btn btn-primary w-100" type="submit" [disabled]="loginForm.invalid || isLoading">
               <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
               <span translate>Login</span>
+            </button>
+            <button class="btn btn-primary w-100" type="submit" [disabled]="isLoading" style="margin-top:20px;">
+              <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
+              <span translate>Public</span>
             </button>
           </form>
         </div>
