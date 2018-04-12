@@ -6,6 +6,7 @@ import { FormsModule }   from '@angular/forms';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
 import { TaskComponent } from './task.component';
+import { PreviewTaskComponent } from './preview.task.component';
 import { TaskRoutingModule } from './task-routing.module';
 import { TaskService } from "../service/task.service";
 
@@ -19,7 +20,8 @@ import { TaskService } from "../service/task.service";
     FormsModule
   ],
   declarations: [
-    TaskComponent
+    TaskComponent,
+    PreviewTaskComponent
   ],
   providers: [
     TaskService

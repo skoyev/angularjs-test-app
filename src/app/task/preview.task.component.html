@@ -1,0 +1,46 @@
+<!-- Modal Preview Window Start -->
+  <div class="modal-header">
+  <h4 class="modal-title" translate>Task Preview</h4>
+
+  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="taskHelp" style="float:left">UserName</label>
+        <input type="text" [(ngModel)]="previewTask.username" name="username" class="form-control" disabled aria-describedby="taskHelp">
+      </div>
+
+      <div class="form-group">
+        <label for="taskHelp" style="float:left">Email</label>
+        <input type="email" [(ngModel)]="previewTask.email" name="email" class="form-control" disabled id="taskHelp" aria-describedby="taskHelp" placeholder="Email">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputDetails1" style="float:left">Text</label>
+        <textarea class="form-control" [(ngModel)]="previewTask.text" name="text" id="exampleInputDetails1" disabled rows="3"></textarea>
+      </div>
+
+      <div class="form-group" *ngIf="isView;else new_status_content">
+        <label for="exampleInputDetails1" style="float:left">Status</label>
+        <div *ngIf="previewTask.status == '0'; else elseStatusBlock" translate>
+          <input type="text" value="New" class="form-control" disabled id="exampleInputDetails1" aria-describedby="taskHelp" >
+        </div>
+        <ng-template #elseStatusBlock translate>
+          <input type="text" value="Done" class="form-control" disabled id="exampleInputDetails1" aria-describedby="taskHelp" >
+        </ng-template>
+      </div>
+
+      <div class="form-group" *ngIf="!isView">
+        <label for="exampleInputDetails1" style="float:left">Picture:</label>
+        <img width="80" src="{{selectedFile}}" style="margin:15px;">
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="onCancel()" translate>Close</button>
+  </div>
+<!-- Modal Preview Window End -->

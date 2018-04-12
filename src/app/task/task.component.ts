@@ -4,7 +4,8 @@ import { finalize } from 'rxjs/operators';
 import { TaskService } from "../service/task.service";
 import { Task } from "../shared/model/task.model";
 import { Option } from "./option.model";
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { PreviewTaskComponent } from "./preview.task.component";
+import {NgbModal, NgbModalRef, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'task-form',
@@ -20,6 +21,7 @@ export class TaskComponent implements OnInit {
   public filePreview:any;
   public hasPreviewDone: boolean = false;
   public isLoading: boolean = false;
+  public modalReference:NgbModalRef;
   options = [
      new Option(0, 'New' ),
      new Option(10, 'Done' )
@@ -58,7 +60,7 @@ export class TaskComponent implements OnInit {
 
   onPreview(content:any) {
     this.hasPreviewDone = true;
-    this.modalService.open(content).result.then((result) => {});
+    this.modalReference = this.modalService.open(content);
   }
 
   onSave() {

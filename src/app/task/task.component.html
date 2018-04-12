@@ -50,54 +50,9 @@
           <div style="text-align:left; color:#ff4d4d;" translate *ngIf="isLoading">Saving</div>
         </div>
 
-        <!-- Modal Preview Window Start -->
         <ng-template #content let-c="close" let-d="dismiss">
-          <div class="modal-header">
-          <h4 class="modal-title" translate>Task Preview</h4>
-
-          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-              <span aria-hidden="true">&times;</span>
-          </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="taskHelp" style="float:left">UserName</label>
-                <input type="text" [(ngModel)]="task.username" name="username" class="form-control" disabled aria-describedby="taskHelp">
-              </div>
-
-              <div class="form-group">
-                <label for="taskHelp" style="float:left">Email</label>
-                <input type="email" [(ngModel)]="task.email" name="email" class="form-control" disabled id="taskHelp" aria-describedby="taskHelp" placeholder="Email">
-              </div>
-
-              <div class="form-group">
-                <label for="exampleInputDetails1" style="float:left">Text</label>
-                <textarea class="form-control" [(ngModel)]="task.text" name="text" id="exampleInputDetails1" disabled rows="3"></textarea>
-              </div>
-
-              <div class="form-group" *ngIf="isView;else new_status_content">
-                <label for="exampleInputDetails1" style="float:left">Status</label>
-                <div *ngIf="task.status == '0'; else elseStatusBlock" translate>
-                  <input type="text" value="New" class="form-control" disabled id="exampleInputDetails1" aria-describedby="taskHelp" >
-                </div>
-                <ng-template #elseStatusBlock translate>
-                  <input type="text" value="Done" class="form-control" disabled id="exampleInputDetails1" aria-describedby="taskHelp" >
-                </ng-template>
-              </div>
-
-              <div class="form-group" *ngIf="!isView">
-                <label for="exampleInputDetails1" style="float:left">Picture:</label>
-                <img width="80" src="{{filePreview}}" style="margin:15px;">
-              </div>
-
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" (click)="c('Close')" translate>Close</button>
-          </div>
+          <preview-task [previewTask]="task" [modalReference]="modalReference" [selectedFile]="filePreview"></preview-task>
         </ng-template>
-        <!-- Modal Preview Window End -->
 
         <div class="form-group" style="float:left;">
           <button type="button" (click)="onCancel()" class="btn btn-primary" translate>Cancel</button>
